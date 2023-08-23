@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-       <h1> Accounts</h1> 
+       <h1 class="text-primary-red"> Accounts</h1> 
     </div>
 </template>
 <script>
