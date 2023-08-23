@@ -23,7 +23,6 @@
                         id="department"
                         name="department"
                         placeholder="department"
-                        v-model="filterDept"
                         />
                     <button class="bg-primary-red px-4"><Icon class="text-white" icon="iconoir:filter" /></button>
                 </div>
@@ -61,7 +60,7 @@
             </div>
         </div>
         <div class="flex flex-col justify-center gap-2 w-[15%] px-12">
-            <VButton color="green" id="Add" @click="addNewItem"/>
+            <VButton color="green" id="Add"/>
             <VButton color="#D9D9D9" id="Cancel"/>
         </div>
     </form>
@@ -80,7 +79,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in filteredItemsByName" class=" odd:bg-gray-100 text-gray-500 hover:bg-red-50">
+                    <tr v-for="item in items" class=" odd:bg-gray-100 text-gray-500 hover:bg-red-50">
                     <td class="flex gap-4 bg-white p-3 ">
                         <img :src="item.image" class="w-[47px]"/> 
                         <h4 class="flex flex-col text-black">
@@ -101,43 +100,9 @@
 </template>
 <script setup>
 import { Icon } from '@iconify/vue';
-import { ref ,computed} from 'vue'
+import { ref } from 'vue'
 
 const isOpen = ref(true)
-const searchText = ref("")
-const filterDept = ref("")
-const filteredItemsByName = computed(() => {
-    if (!searchText.value) {
-        return items.value;
-    }
-    return items.value.filter((item) =>
-        item.name.toLowerCase().includes(searchText.value.toLowerCase())
-    );
-});
-const addItem = (newItem) => {
-    items.value.push(newItem);
-    localStorage.setItem('employeeItems', JSON.stringify(items.value));
-};
-const savedItems = localStorage.getItem('employeeItems');
-if (savedItems) {
-    items.value = JSON.parse(savedItems);
-}
-const addNewItem = () => {
-    const newItem = {
-        // Set properties for the new item
-        image: 'url_to_image',
-        name: 'New Employee',
-        id: 'new_id',
-        date: 'Current Date',
-        email: 'new_employee@example.com',
-        department: 'New Department',
-        isActive: true,
-    };
-
-    addItem(newItem);
-    isOpen.value = !isOpen.value; // Close the form after adding
-};
-
 
 const items = ref([
     {
@@ -170,7 +135,6 @@ const items = ref([
         isActive: false
 
     },
-
    
 ])
 </script>
