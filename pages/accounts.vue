@@ -39,7 +39,7 @@
 <!-- this is the new employee form-->
         <div v-if="isOpen"></div>
         <div v-else class="border-t-2 border-gray-100">
-            <form action="" class="flex py-8">
+            <form action="" class="flex py-6">
                 <div class="flex justify-center items-center w-[30%]">
                     <label for="image" class="flex flex-col justify-center items-center gap-4">
                         <img class="w-[7em] border-dashed border-gray-400 border-2" src="https://static.vecteezy.com/system/resources/thumbnails/002/058/031/small/picture-icon-photo-symbol-illustration-for-web-and-mobil-app-on-grey-background-free-vector.jpg"/>
@@ -47,7 +47,7 @@
                         <input type="file" id="image" class="hidden"/>
                     </label>
                 </div>
-                <div class="w-[50%]">
+                <div class="w-[50%] flex flex-col gap-4">
                     <div class="flex gap-2">
                         <InputBox type="text" id="First Name" v-model="fName" />
                         <InputBox type="text" id="Middle Name" v-model="mName"/>
@@ -57,6 +57,13 @@
                         <InputBox type="email" id="Email" v-model="email"/>
                         <InputBox type="text" id="Department" v-model="department"/>
                         <InputBox type="text" id="ID No." v-model="id"/>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="radio" id="active" name="isActive" checked value="Active" @click="isActive= true">
+                        <label for="deactivated">Active</label>
+                        <input type="radio" id="deactivated" name="isActive" value="Deactivated" @click="isActive= false">
+                        <label for="deactivated">Deactivated</label>
+                        
                     </div>
                 </div>
                 <div class="flex flex-col justify-center gap-2 w-[20%] px-12">
@@ -116,7 +123,7 @@
     <div class="flex gap-1 justify-end">
         <button class="p-2 rounded-md bg-yellow-400" ><Icon class="text-white" icon="grommet-icons:power-reset" /></button>
         <button class="p-2 rounded-md bg-green-600" @click="isDisabled=!isDisabled"><Icon class="text-white" icon="gg:pen" /></button>
-        <button class="p-2 rounded-md bg-red-600 " @click=" () => handleDelete(item)"><Icon class="text-white" icon="ant-design:delete-outlined" /></button>
+        <button class="p-2 rounded-md bg-red-600 " @click="() => handleDelete(clickedRow)"><Icon class="text-white" icon="ant-design:delete-outlined" /></button>
     </div>
     <div class="flex p-4 gap-4 items-center grow">
       <img :src="clickedRow.image" class="w-[99px] aspect-square object-cover"/>
@@ -221,6 +228,7 @@ const isOpen = ref(true)
 const searchText = ref("")
 const filterDept = ref("")
 const clickedRow=ref(null)
+const isActive=ref(true)
 
 const isDisabled=ref(true)
 // Search by name
@@ -265,7 +273,7 @@ const handleAddItem = () => {
         date: new Date(),
         email: email,
         department: department,
-        isActive: true,
+        isActive: isActive,
     };
 
     addItem(newItem);
@@ -277,10 +285,14 @@ const handleCancel = ()=> {
     clickedRow.value = null
 }
 
-const handleDelete = (item)=> {
-    items.filter(emp => emp.id != item.id)
-}
-
+const handleDelete = (item) => {
+  const index = items.value.findIndex(emp => emp.id === item.id);
+  if (index !== -1) {
+    items.value.splice(index, 1);
+    nuxtStorage.localStorage.setData('employeeItems', JSON.stringify(items.value), 1, 'h');
+  }
+  clickedRow.value = null;
+};
 const handleUpdate = ()=> {
 
 }
