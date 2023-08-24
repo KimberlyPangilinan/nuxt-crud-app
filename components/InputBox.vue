@@ -1,5 +1,6 @@
 <script setup>
-defineProps(['id','placeholder', 'type','isRequired'])
+defineProps(['id','placeholder', 'type','isRequired','modelValue'])
+defineEmits(['update:modelValue'])
 </script>
 
 <template lang="">
@@ -11,7 +12,9 @@ defineProps(['id','placeholder', 'type','isRequired'])
             <input
                 type={{type}}
                 name={{id}}
-                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+                class="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 h-[46px] rounded-sm focus:outline-none focus:border-red-200 focus:ring-red-200 block w-full  sm:text-sm focus:ring-1" 
                  />
          </label>
     </div>

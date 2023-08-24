@@ -4,7 +4,7 @@ defineProps(['id','icon','color'])
 
 <template lang="">
      <button 
-          class="text-white py-2 px-4 rounded-sm "
+          class="text-white py-2 px-4 rounded-sm h-[55px] w-[125px] "
           @click=""
           :style="{ backgroundColor: color}"
           id="new"
