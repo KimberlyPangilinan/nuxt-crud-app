@@ -2,12 +2,13 @@
 module.exports = {
   content: [],
   fontFamily: {
-    'serif': 'Plus Jakarta Sans',
+    'sans': 'Plus Jakarta Sans',
   },
   theme: {
     extend: {
       colors: {
-        'primary-red': '#E42323'
+        'primary-red': '#E42323',
+        'primary-yellow':'#FFC700'
       },
       
   },

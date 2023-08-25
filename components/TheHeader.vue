@@ -1,11 +1,3 @@
-<script>
-import { Icon } from '@iconify/vue';
-export default {
-    components: {
-		Icon,
-	},
-}
-</script>
 <template>
     <div class="fixed top-0 w-screen flex-col border w-100 flex bg-white justify-between items-center p-4 md:flex-row z-[100] ">
         <img class="w-[190px]" src="/img/logo.png" alt="logo">
@@ -25,9 +17,17 @@ export default {
 </template>
 
 <style scoped>
-    .router-link-active{
-        padding-bottom: 25px;
+    .router-link-active, li a:hover{
+        padding-bottom: 24px;
         border-bottom: 7px solid red;
     }
     
 </style>
+<script>
+import { Icon } from '@iconify/vue';
+export default {
+    components: {
+		Icon,
+	},
+}
+</script>

@@ -23,13 +23,12 @@
                         id="department"
                         name="department"
                         placeholder="department"
-                        v-model="filterDept"
                         />
                     <button class="bg-primary-red px-4 rounded-sm"><Icon class="text-white" icon="iconoir:filter" /></button>
                 </div>
             </div>
-            <div class="py-8">    
-                 <button 
+            <div class="py-8">
+                 <button
                     class="bg-primary-red text-white py-3 px-6 flex items-center gap-2 text-sm rounded"
                     @click="isOpen = !isOpen"
                     id="new"
@@ -40,143 +39,158 @@
         <div v-if="isOpen"></div>
         <div v-else class="border-t-2 border-gray-100">
             <form action="" class="flex py-6">
-                <div class="flex justify-center items-center w-[30%]">
+                <div class="flex justify-center items-center w-[20%]">
                     <label for="image" class="flex flex-col justify-center items-center gap-4">
-                        <img class="w-[7em] border-dashed border-gray-400 border-2" src="https://static.vecteezy.com/system/resources/thumbnails/002/058/031/small/picture-icon-photo-symbol-illustration-for-web-and-mobil-app-on-grey-background-free-vector.jpg"/>
+                        <img class="w-[7em] border-dashed border-gray-400 border-2" src="/img/upload.png"/>
                         <span class="text-[#00A2FD]">Upload image</span>
                         <input type="file" id="image" class="hidden"/>
                     </label>
                 </div>
-                <div class="w-[50%] flex flex-col gap-4">
+                <div class="w-[60%] flex flex-col gap-8">
                     <div class="flex gap-2">
-                        <InputBox type="text" id="First Name" v-model="fName" />
+                        <InputBox type="text" id="First Name" v-model="fName" isRequired="true"/>
                         <InputBox type="text" id="Middle Name" v-model="mName"/>
-                        <InputBox type="text" id="Last Name" v-model="lName"/>
+                        <InputBox type="text" id="Last Name" v-model="lName" isRequired="true"/>
                     </div>
                     <div class="flex gap-2">
-                        <InputBox type="email" id="Email" v-model="email"/>
-                        <InputBox type="text" id="Department" v-model="department"/>
-                        <InputBox type="text" id="ID No." v-model="id"/>
+                        <InputBox type="email" id="Email" v-model="email" isRequired="true"/>
+                        <InputBox type="text" id="Department" v-model="department" isRequired="true"/>
+                        <InputBox type="text" id="ID No." v-model="id" isRequired="true"/>
                     </div>
-                    <div class="flex gap-2">
-                        <input type="radio" id="active" name="isActive" checked value="Active" @click="isActive= true">
-                        <label for="deactivated">Active</label>
-                        <input type="radio" id="deactivated" name="isActive" value="Deactivated" @click="isActive= false">
-                        <label for="deactivated">Deactivated</label>
+                    <div class="flex gap-4 ">
+                        <div class="flex items-center gap-2"><div @click="isActive= true" class="w-[24px] h-[24px]  rounded-md" :style="{ backgroundColor: isActive ? '#00a2fd' : '#E6E6E6' }"></div><span class="text-xs font-bold text-[#766E6E]"> Active </span></div>
+                        <div class="flex items-center gap-2"><div @click="isActive= false" class="w-[24px] h-[24px] rounded-md after:content-['/']'" :style="{ backgroundColor: isActive ? '#E6E6E6' : '#00a2fd' }"></div> <span class="text-xs font-bold text-[#766E6E]">Deactivated</span></div>
                         
                     </div>
                 </div>
                 <div class="flex flex-col justify-center gap-2 w-[20%] px-12">
                     <VButton color="green" id="Add" @click="handleAddItem"/>
-                    <VButton color="#D9D9D9" id="Cancel"/>
+                    <VButton color="#D9D9D9" id="Cancel"  @click="isOpen = !isOpen"/>
                 </div>
             </form>
         </div>
-<!-- table -->
-<div class="flex gap-4">
-  <div class="flex flex-col gap-6 grow">
-    <h2 class="font-semibold flex w-[100%] items-center gap-10">
-      Employees Account
-      <hr class="grow bg-red-100 h-[0.3rem]">
-    </h2>
-    <div class="flex gap-4 items-start ">
-      <table class="table-auto grow text-[#667085]  ">
-        <thead>
-          <tr class="text-left text-gray-500 font-medium text-xs h-16">
-            <th class="p-3"><input type="checkbox"/></th>
-            <th class="p-3">File Name/ID No.</th>
-            <th class="p-3">Date</th>
-            <th class="p-3">Email</th>
-            <th class="p-3">Department</th>
-            <th class="p-3">Active</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            @click="() => handleRowClick(item)"
-            v-for="item in filteredItemsByName"
-            class="odd:bg-gray-100 text-gray-500 hover:bg-red-50"
-          >
-            <td class="p-3 bg-white"><input type="checkbox"/></td>
-            <td class="flex gap-4 bg-white p-3 min-w-[300px]">
-              <img :src="item.image" class="w-[47px]"/> 
-              <h4 class="flex flex-col text-black">
-                {{ item.fName }} {{ item.mName }} {{ item.lName }} 
-                <span class="text-sm text-[#667085]">{{ item.id }}</span>
-              </h4>
-            </td>
-            <td class="p-3">{{ item.date }}</td>
-            <td class="p-3">{{ item.email }}</td>
-            <td class="p-3">{{ item.department }} </td>
-            <td class="p-3 font-semibold" :style="{ color: item.isActive ? 'green' : 'red' }">
-              {{ item.isActive ? 'Active' : 'Deactivated' }}
-            </td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-  <div v-if="clickedRow" class="flex flex-col max-w-[380px] bg-[#F8F7F7] p-6 max-h-[70vh]">
-    <div class="flex gap-1 justify-end">
-        <button class="p-2 rounded-md bg-yellow-400" ><Icon class="text-white" icon="grommet-icons:power-reset" /></button>
-        <button class="p-2 rounded-md bg-green-600" @click="isDisabled=!isDisabled"><Icon class="text-white" icon="gg:pen" /></button>
-        <button class="p-2 rounded-md bg-red-600 " @click="() => handleDelete(clickedRow)"><Icon class="text-white" icon="ant-design:delete-outlined" /></button>
-    </div>
-    <div class="flex p-4 gap-4 items-center grow">
-      <img :src="clickedRow.image" class="w-[99px] aspect-square object-cover"/>
-      <div class="text-xs font-medium flex flex-col">
-        <span class="text-[#00A2FD] ">Upload image</span>
-        {{ clickedRow.fName }} {{ clickedRow.mName }} {{ clickedRow.lName }} 
-      </div>
-    </div>
-    <div class="flex justify-between gap-4">
-        <div class="flex flex-col gap-4">
-            <div class="flex flex-col">
-                <label class="text-xs">First Name</label>
-                <input type="text" v-model="clickedRow.fName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
-            </div>
-            <div class="flex flex-col">
-                <label class="text-xs">Middle</label>
-                <input type="text" v-model="clickedRow.mName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
-            </div>
-            <div class="flex flex-col">
-                <label class="text-xs">Last Name</label>
-                <input type="text" v-model="clickedRow.lName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
-            </div>
-            
-        </div>
-        <div class="flex flex-col gap-4 ">
-            <div class="flex flex-col">
-                <label class="text-xs">Email</label>
-                <input type="email" v-model="clickedRow.email" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
-            </div>
-            <div class="flex flex-col">
-                <label class="text-xs">Department</label>
-                <input type="email" v-model="clickedRow.department" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
-            </div>
-            <div class="flex flex-col">
-                <label class="text-xs">ID No.</label>
-                <input type="email" v-model="clickedRow.id" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+        <!-- table -->
+        <div class="flex gap-4">
+        <div class="flex flex-col gap-6 grow">
+            <h2 class="font-semibold flex w-[100%] items-center gap-10">
+            Employees Account
+            <hr class="grow bg-red-100 h-[0.3rem]">
+            </h2>
+            <div class="flex gap-4 items-start ">
+            <table class="table-fixed grow text-[#667085]  ">
+                <thead>
+                <tr class="text-left text-gray-500 font-medium text-xs h-16 ">
+                    <th class="p-3"><input type="checkbox"/></th>
+                    <th class="p-3">File Name/ID No.</th>
+                    <th class="p-3">Date</th>
+                    <th class="p-3">Email</th>
+                    <th class="p-3">Department</th>
+                    <th class="p-3">Active</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    
+<!-- table row for employee data that loops to all available data -->
+                <tr
+                    @click="() => handleRowClick(item)"
+                    v-for="item in filteredItemsByName"
+                    class="odd:bg-gray-100 text-gray-500 hover:bg-red-50 cursor-pointer "
+                >
+                    <td class="p-3 bg-white"><input type="checkbox"/></td>
+                    <td class="flex gap-4 bg-white p-3 min-w-max">
+                    <img :src="item.image" class="w-[47px]"/> 
+                    <h4 class="flex flex-col text-black">
+                        {{ item.fName }} {{ item.mName }} {{ item.lName }} 
+                        <span class="text-sm text-[#667085]">{{ item.id }}</span>
+                    </h4>
+                    </td>
+                    <td class="p-3 min-w-[10em]">{{ item.date }}</td>
+                    <td class="p-3">{{ item.email }}</td>
+                    <td class="p-3">{{ item.department }} </td>
+                    <td class="p-3 font-semibold" :style="{ color: item.isActive ? 'green' : 'red' }">
+                    {{ item.isActive ? 'Active' : 'Deactivated' }}
+                    </td>
+                    <td class="p-3 bg-white"><Icon icon="mi:options-vertical" /></td>
+                </tr>
+                </tbody>
+            </table>
             </div>
         </div>
-      
-    </div>
-    <div class="pt-4 flex gap-2 justify-end grow align-bottom items-end">
-        <button class="px-4 py-3 w-[80px] h-[46px] rounded-sm text-xs text-white bg-[#D9D9D9]" @click="handleCancel">Cancel</button>
-        <button class="px-4 py-3 w-[80px] h-[46px] rounded-sm text-xs text-white bg-[#308F00]" @click="handleUpdate">Update</button>
-    </div>
-  </div>
-</div>
 
+<!-- side component that will open when there is a clicked row-->
+        <div v-if="clickedRow" class="flex flex-col gap-4 max-w-[380px] bg-[#F8F7F7] p-6 max-h-[70vh]">
+            <div class="flex gap-1 justify-end">
+                <button class="p-2 rounded-md bg-yellow-400" @click="resModalOpen=!resModalOpen" ><Icon class="text-white" icon="grommet-icons:power-reset" /></button>
+                <button class="p-2 rounded-md bg-green-600" @click="isDisabled=!isDisabled"><Icon class="text-white" icon="gg:pen" /></button>
+                <button class="p-2 rounded-md bg-red-600 " @click="delModalOpen=!delModalOpen"><Icon class="text-white" icon="ant-design:delete-outlined" /></button>
+            </div>
+            <div class="flex p-4 gap-4 items-center grow">
+            <img :src="clickedRow.image" class="w-[99px] aspect-square object-cover"/>
+            <div class="text-xs font-medium flex flex-col">
+                <label for="image" >
+                        <span class="text-[#00A2FD] cursor-pointer">Upload image</span>
+                        <input type="file" id="image" class="hidden"/>
+                    </label>
+                {{ clickedRow.fName }} {{ clickedRow.mName }} {{ clickedRow.lName }} 
+                <span>{{ clickedRow.id }}</span>
+            </div>
+            </div>
+            <div class="flex justify-between gap-4">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col">
+                        <label class="text-xs">First Name</label>
+                        <input type="text" v-model="clickedRow.fName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs">Middle</label>
+                        <input type="text" v-model="clickedRow.mName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs">Last Name</label>
+                        <input type="text" v-model="clickedRow.lName" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-4 ">
+                    <div class="flex flex-col">
+                        <label class="text-xs">Email</label>
+                        <input type="email" v-model="clickedRow.email" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs">Department</label>
+                        <select  v-model="clickedRow.department" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400">
+                        <option disabled value="">Please select one</option>
+                        <option>IT</option>
+                        <option>Accounting</option>
+                        <option>Marketing</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs">ID No.</label>
+                        <input type="email" v-model="clickedRow.id" :disabled="isDisabled" class="p-2 bg-[#F6F6F6] disabled:text-[#766E6E] text-xs rounded-md border  border-slate-300 placeholder-slate-400 focus:outline-none placeholder:text-slate-400" />
+                    </div>
+                    
+                </div>
+            
+            </div>
+            <div class="flex gap-2">
+                        <div @click="clickedRow.isActive= !clickedRow.isActive" class="w-[20px] h-[20px]  rounded-sm" :style="{ backgroundColor: clickedRow.isActive ? '#00a2fd' : '#E6E6E6' }"></div> <span class="text-xs">Active</span>
+                        <div @click="clickedRow.isActive= false" class="text-primary-red ml-4 font-bold text-xs">Deactivated </div>   
+                    </div>
+            <div class="pt-4 flex gap-2 justify-end grow align-bottom items-end">
+                <button class="px-4 py-3 w-[80px] h-[46px] rounded-sm text-xs text-white bg-[#D9D9D9]" @click="handleCancel">Cancel</button>
+                <button class="px-4 py-3 w-[80px] h-[46px] rounded-sm text-xs text-white bg-[#308F00]" @click="()=>handleUpdate(item)">Update</button>
+            </div>
+        </div>
+        </div>
+        <VModal v-if="delModalOpen"  @close-modal="delModalOpen = false" @handle-click="() => handleDelete(clickedRow)" title="Delete Account" subtitle="You'll permanently delete all the data, messages, photos and important information." color="#E42326" img="/img/delete.png" name="Delete"/>
+        <VModal v-if="resModalOpen"  @close-modal="resModalOpen = false" @handle-click="() => handleReset(clickedRow)" title="Reset Profile" subtitle="Are you sure you want to reset this profile? If you reset this profile, you will permanently lose all the important data." color="#F4B000" img="/img/reset.png" name="Reset"/>
+            
     </main>
 </template>
 
-
 <script setup>
-
 import { Icon } from '@iconify/vue';
 import { ref ,computed } from 'vue'
 import nuxtStorage from 'nuxt-storage';
@@ -214,23 +228,25 @@ import nuxtStorage from 'nuxt-storage';
         email: 'juandelacruz@gmail.com',
         department: 'juandelacruz@gmail.com',
         isActive: false
-
     },
-   
 ])
+
+
 const fName = ref('')
 const mName = ref('')
 const lName = ref('')
 const email = ref('')
+const date = ref('')
+const image = ref('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO4c65pYszSc86a_p9ZMwAR4l6_F-76QZB6w&usqp=CAU')
 const department = ref('')
-const name = ref('')
 const isOpen = ref(true)
 const searchText = ref("")
-const filterDept = ref("")
 const clickedRow=ref(null)
 const isActive=ref(true)
-
+const delModalOpen=ref(false)
+const resModalOpen=ref(false)
 const isDisabled=ref(true)
+
 // Search by name
 const filteredItemsByName = computed(() => {
     if (!searchText.value) {
@@ -242,10 +258,21 @@ const filteredItemsByName = computed(() => {
     );
 });
 
+const formattedDate= (date)=>{
+    const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+
 // Function for handling row click
 const handleRowClick = (item)=>{
-    console.log("sf")
-    console.log("Row clicked:", item.name, item.department);
     isOpen.value = true
     clickedRow.value = item
 }
@@ -265,12 +292,12 @@ const addItem = (newItem) => {
 
 const handleAddItem = () => {
     const newItem = {
-        image: 'img',
+        image: image,
         fName: fName,
         lName: lName,
         mName: mName,
         id: 100,
-        date: new Date(),
+        date: formattedDate(new Date()),
         email: email,
         department: department,
         isActive: isActive,
@@ -278,7 +305,7 @@ const handleAddItem = () => {
 
     addItem(newItem);
     clickedRow.value = null
-    isOpen.value = !isOpen.value; 
+    isOpen.value = !isOpen.value;
 };
 
 const handleCancel = ()=> {
@@ -286,15 +313,32 @@ const handleCancel = ()=> {
 }
 
 const handleDelete = (item) => {
-  const index = items.value.findIndex(emp => emp.id === item.id);
-  if (index !== -1) {
-    items.value.splice(index, 1);
-    nuxtStorage.localStorage.setData('employeeItems', JSON.stringify(items.value), 1, 'h');
-  }
-  clickedRow.value = null;
-};
-const handleUpdate = ()=> {
+    delModalOpen.value = false
+    const index = items.value.findIndex(emp => emp.id === item.id);
 
+    if (index > -1) {
+        items.value.splice(index, 1);
+        nuxtStorage.localStorage.setData('employeeItems', JSON.stringify(items.value), 1, 'h')
+        clickedRow.value = null;
+    }
+};
+
+const handleReset = (item) =>{
+    isDisabled.value = false
+    resModalOpen.value = false
+    clickedRow.value.fName=""
+    clickedRow.value.lName=""
+    clickedRow.value.mName=""
+    clickedRow.value.email=""
+    clickedRow.value.image="/img/upload.png"
+    clickedRow.value.department=""
+    clickedRow.value.id=""
+}
+
+const handleUpdate = ()=> {
+    clickedRow.value= null
+    nuxtStorage.localStorage.setData('employeeItems',JSON.stringify(items.value), 1, 'h');
+    
 }
 
 

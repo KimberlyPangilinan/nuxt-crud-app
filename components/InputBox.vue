@@ -5,8 +5,11 @@ defineEmits(['update:modelValue'])
 
 <template lang="">
     <div class="grow">
-        <label class="block">
-            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
+        <label class="flex flex-col gap-2">
+            <span v-if="isRequired" class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-700">
+                {{id}}
+            </span>
+            <span v-else class=" block text-xs font-medium text-slate-700">
                 {{id}}
             </span>
             <input
