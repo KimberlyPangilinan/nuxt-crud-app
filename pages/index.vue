@@ -1,7 +1,10 @@
 
 <template lang="">
-    <main class="mt-[11em] w-100 h-[80vh] gap-20 grid place-items-center md:mt-[7em]">
-       <h1 class="font-sans text-xl font-extrabold">Need something done?</h1>
+    <main class="mt-[14em] w-100 h-[80vh] gap-4 grid place-items-center md:mt-[8em]">
+        <div class="flex flex-col items-center">
+        <h1 class="font-sans text-xl font-extrabold">Need something done? </h1>
+        <hr class="bg-[#B09191] h-1 w-10 mt-4"/>
+        </div>
        <div class="flex flex-col justify-between gap-[103px] px-[174px] md:flex-row">
         <TheCard 
         title="Post a Job" 

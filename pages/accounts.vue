@@ -59,7 +59,7 @@
                     </div>
                     <div class="flex gap-4 ">
                         <div class="flex items-center gap-2"><div @click="isActive= true" class="w-[24px] h-[24px]  rounded-md" :style="{ backgroundColor: isActive ? '#00a2fd' : '#E6E6E6' }"></div><span class="text-xs font-bold text-[#766E6E]"> Active </span></div>
-                        <div class="flex items-center gap-2"><div @click="isActive= false" class="w-[24px] h-[24px] rounded-md after:content-['/']'" :style="{ backgroundColor: isActive ? '#E6E6E6' : '#00a2fd' }"></div> <span class="text-xs font-bold text-[#766E6E]">Deactivated</span></div>
+                        <div class="flex items-center gap-2"><div @click="isActive= false" class="w-[24px] h-[24px] rounded-md " :style="{ backgroundColor: isActive ? '#E6E6E6' : '#00a2fd' }"></div> <span class="text-xs font-bold text-[#766E6E]">Deactivated</span></div>
                         
                     </div>
                 </div>
@@ -270,6 +270,7 @@ const formattedDate= (date)=>{
 
   return `${month} ${day}, ${year}`;
 }
+
 
 // Function for handling row click
 const handleRowClick = (item)=>{
